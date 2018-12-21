@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../../../static/record/layui/css/layui.css">
+    <style>
+        .listClick{
+            height:30px;
+            display: inline-block;
+            font-size: 20px;
+            padding:2px 4px;
+            line-height: 30px;
+            border:1px solid rgba(0,0,0,.2);
+            margin:5px;
+            border-radius: 3px;
+            cursor:pointer;
+            -moz-user-select:none; /*火狐*/
+            -webkit-user-select:none; /*webkit浏览器*/
+            -ms-user-select:none; /*IE10*/
+            -khtml-user-select:none; /*早期浏览器*/
+            user-select:none;
+        }
+        .listClick:hover{
+            background: rgba(0,0,0,.3);
+        }
+        #demo2{
+            max-height: 400px;
+            text-align: left;
+            overflow: auto;
+        }
+        .imgBox{
+            padding:5px;
+            border-radius: 3px;
+            margin:3px;
+            border:1px solid rgba(0,0,0,.2);
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="padding:0 10px;">
+<div id="supp">
+    <div style="padding:50px 0 20px 0;color:red;">
+        <p >提示：</p>
+        <p>1.本上传模式为案件补传模式，上传类型应为 （JPG PNG） 的图片格式</p>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+        <legend id="title_type_txt">选择案件号进行补传</legend>
+    </fieldset>
+    <div style="text-align:left;max-height: 300px;overflow: auto">
+        <div class="listClick" v-for="i in list" v-text="i.business_id" @click="imgClick(i)"></div>
+    </div>
+    <div style="text-align:center;" v-show="show">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+            <legend v-text="'为案件（'+business_id+'）进行补传'"></legend>
+        </fieldset>
+        <div class="layui-upload">
+            <button type="button" class="layui-btn" id="test2">点击进行选择</button>
+            <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;text-align: left">
+                预览图：
+                <div class="layui-upload-list" id="demo2"></div>
+            </blockquote>
+        </div>
+        <div class="layui-upload">
+            <button type="button" class="layui-btn" id="test9">开始上传</button>
+        </div>
+    </div>
+</div>
+<script src="../../../../../static/record/js/min.js"></script>
+<script src="../../../../../static/record/js/vue-resource.js"></script>
+<script src="../../../../../static/record/js/jquery-2.1.1.min.js"></script>
+<script src="../../../../../static/record/js/getImgURL.js"></script>
+<script src="../../../../../static/record/layui/layui.js"></script>
+<script src="../../../../../static/record/js/purpose.js"></script>
+<script src="../../../../../static/record/js/case_supplement.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../../../static/record/layui/css/layui.css">
+</head>
+<body style="padding:0 10px;">
+<div style="padding:50px 0 50px 20px;color:red;">
+    <p>提示：</p>
+    <p>1.本上传模式为案件上传模式，上传类型应为 .ZIP。</p>
+    <p>2.压缩包中图片类型应是 （JPG PNG） 格式。</p>
+    <p>3.案件名默认为压缩包文件名。</p>
+    <p>4.案件模式目前仅支持单个压缩包上传。</p>
+</div>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend id="title_type_txt">案件上传</legend>
+</fieldset>
+<div style="text-align:center">
+    <div class="layui-upload">
+        <button type="button" class="layui-btn" id="test8">选择文件</button>
+        <div class="layui-upload-list">
+            <img style="width:100px;height:100px;" class="layui-upload-img" id="demo1">
+            <p id="demoText"></p>
+            <p id="demoSize"></p>
+        </div>
+    </div>
+    <div class="layui-upload">
+        <button type="button" class="layui-btn" id="test9">开始上传</button>
+    </div>
+</div>
+<script src="../../../../../static/record/js/jquery-2.1.1.min.js"></script>
+<script src="../../../../../static/record/js/getImgURL.js"></script>
+<script src="../../../../../static/record/layui/layui.js"></script>
+<script src="../../../../../static/record/js/purpose.js"></script>
+<script src="../../../../../static/record/js/case_upload.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+/*!*默认滚动条样式*!*/
+*{padding:0;margin:0;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+not supported by any browser */}
+body,html{height:99%;}
+/*#app{overflow: hidden;height:50%;}*/
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    border: 1px #d3d3d3 solid;
+    box-shadow: 0px 0px 3px #dfdfdf inset;
+    border-radius: 10px;
+    background: #eee;
+}
+::-webkit-scrollbar-thumb {
+    border: 1px #808080 solid;
+    border-radius: 10px;
+    background: #999;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #7d7d7d;
+}
+#app{display:block;height:100%;}
+.information,.imgAmdListBox{
+    position: absolute;
+    width: 40%;
+    height:86%;
+}
+.information{
+    position: absolute;
+    width: 60%;
+    height:86%;
+}
+.imgAmdListBox{
+    overflow: hidden;
+}
+.img_move_box{
+    position: absolute;
+    height:80%;
+}
+.inTable input{
+    width:100%;
+}
+.information{
+    left: 40%;
+    overflow: auto;
+}
+.imgButBox{
+    position: relative;
+    top:0;
+}
+.omtImg{
+    position: absolute;
+    top: 0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0);
+}
+.direction{
+    position: absolute;
+    bottom: 0;
+}
+.direction >div,.direction >div>div{
+    display: inline-block;
+}
+#suspensionTitle{
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 3;
+    background: #fff;
+    display: none;
+}
+#suspensionTitle>div{
+    background: rgba(0,255,0,.2);
+    padding:3px 5px;
+    box-shadow: 1px 2px 5px rgba(0,0,0,.2);
+    border-radius: 5px;
+}
+.greenIdentification{
+    background: rgba(0,255,0,.3);
+}
+.blackIdentification{
+    background: rgba(0,0,0,.5);
+}
+#appList{
+    overflow: auto;
+    width:100%;
+    height:100px;
+    border:1px solid rgba(0,0,0,.2);
+    border-radius: 3px;
+}
+
+.select {
+    display: inline-block;
+    width: 300px;
+    position: relative;
+    vertical-align: middle;
+    padding: 0;
+    overflow: hidden;
+    background-color: #fff;
+    color: #555;
+    border: 1px solid #aaa;
+    text-shadow: none;
+    border-radius: 4px;
+    transition: box-shadow 0.25s ease;
+    z-index: 2;
+}
+.select:hover {
+         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+.select:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #ccc;
+    top: 14px;
+    right: 10px;
+    cursor: pointer;
+    z-index: -2;
+}
+.select select {
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.select select:focus {
+    outline: none;
+}

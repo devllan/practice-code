@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <title>数美科技管理系统</title>
+    <script>
+        setInterval(function () {
+            localStorage.length===0?window.location.href='/api/ocr/val_validation_logout/':localStorage.length;
+        },1000)
+    </script>
+    <link rel="stylesheet" href="../../static/custom_visualization/layui/css/layui.css">
+    <style>
+        iframe{
+            height:99%;
+            width:100%;
+            }
+        .navButtonList{
+            display: none;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div id="details_name" class="layui-logo"></div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <!--<li class="layui-nav-item"><a href="">控制台</a></li>-->
+            <!--<li class="layui-nav-item"><a href="">用户</a></li>-->
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    信息查询
+                </a>
+                <dl class="layui-nav-child">
+                    <dd ><a href="#" onclick="ifra_click('/api/ocr/val_tion_search_E/','search_hospital')">医院信息查询</a></dd>
+                    <dd ><a href="#" onclick="ifra_click('/api/ocr/val_tion_search_E/','search_disease')">疾病信息查询</a></dd>
+                    <dd ><a href="#" onclick="ifra_click('/api/ocr/val_tion_search_E/','search_Drugs_alias')">药品信息查询</a></dd>
+                    <dd ><a href="#" onclick="ifra_click('/api/ocr/val_tion_search_E/','search_medical_alias')">检查检验指标查询</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="User_Name">
+
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/api/ocr/val_validation_logout/">退出登录</a></li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul id="navButtonUl" class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item" id="img" style="display: none;"><a href="#" onclick="ifra_click('/api/ocr/val_tion_sub/','100005')">单证上传</a></li>
+                <li class="layui-nav-item" id="zip_file" style="display: none;"><a href="#" onclick="ifra_click('/api/ocr/val_tion_sub/','100006')">ZIP包上传</a></li>
+                <li id="navButtonLi" class="layui-nav-item" style="display: none;">
+                    <a class="" href="javascript:;">分类上传</a>
+                    <dl class="layui-nav-child navButList">
+                        <dd class="navButtonList" id="pdf_file"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','100002')">PDF文件上传</a></dd>
+                        <dd class="navButtonList" id="bj_invoice"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','1000')">发票(北京)</a></dd>
+                        <!--<dd><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','病例')">病例</a></dd>-->
+                        <dd class="navButtonList" id="prescription"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','1001')">处方单</a></dd>
+                        <dd class="navButtonList" id="laboratory"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','1002')">化验单</a></dd>
+                        <dd class="navButtonList" id="medical_record_home_page"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','1005')">病案首页</a></dd>
+                        <dd class="navButtonList" id="medical_report"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','100001')">体检报告</a></dd>
+                        <!--<dd><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','门（急）诊病例')">门(急)诊病例</a></dd>-->
+                        <dd class="navButtonList" id="video_report"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','1004')">影像检查报告</a></dd>
+                        <dd class="navButtonList" id="admission_record"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','1003')">出、入院记录</a></dd>
+                        <dd class="navButtonList" id="listling"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','1006')">费用清单（住院）</a></dd>
+                        <dd class="navButtonList" id="pathological"><a href="javascript:;" onclick="ifra_click('/api/ocr/val_tion_sub/','1007')">病理报告</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="#" onclick="ifra_click('/api/ocr/val_tion_retrieve/')">历史记录</a></li>
+                <li class="layui-nav-item"><a href="#" onclick="ifra_click('/api/ocr/val_tion_search/')">历史查询</a></li>
+                <li id="all_user" class="layui-nav-item" style="display: none;"><a href="#" onclick="ifra_click('/api/ocr/val_tion_the_child_users/')">子用户管理</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <iframe id="ifram" name="ALL_Son" src="/api/ocr/val_tion_sub/?type=100005" style="margin:0;padding:0;" frameborder="0"></iframe>
+    </div>
+    <div class="layui-footer">
+        © 技术支持由数美科技提供
+    </div>
+</div>
+
+<script src="../../static/custom_visualization/js/min.js"></script>
+<script src="../../static/custom_visualization/layui/layui.js"></script>
+<script>
+        var los=JSON.parse(localStorage.successResult);
+        var dom_block=function (id,blo) {
+            var navButList=document.getElementsByClassName('navButList')[0];
+            try{
+                if (blo){
+                    var domz=document.getElementById(id);
+                    navButList.removeChild(domz);
+                    return 'delect DOM'
+                }
+                document.getElementById(id).style.display='block';
+                return 'block true'
+            }catch (err){
+                console.log(err);
+                return err
+            }
+        };
+        los.all_user?dom_block('all_user'):dom_block('all_user',true);
+        los.img?dom_block('img'):dom_block('img',true);
+        los.zip_file?dom_block('zip_file'):dom_block('zip_file',true);
+        if(los.is_permiss){
+            document.getElementById('navButtonLi').style.display='block';
+            los.bj_invoice?dom_block('bj_invoice'):dom_block('bj_invoice',true);
+            los.prescription?dom_block('prescription'):dom_block('prescription',true);
+            los.laboratory?dom_block('laboratory'):dom_block('laboratory',true);
+            los.medical_record_home_page?dom_block('medical_record_home_page'):dom_block('medical_record_home_page',true);
+            los.medical_report?dom_block('medical_report'):dom_block('medical_report',true);
+            los.pathological?dom_block('pathological'):dom_block('pathological',true);
+            los.listling?dom_block('listling'):dom_block('listling',true);
+            los.pdf_file?dom_block('pdf_file'):dom_block('pdf_file',true);
+            los.admission_record?dom_block('admission_record'):dom_block('admission_record',true);
+            los.video_report?dom_block('video_report'):dom_block('video_report',true);
+        }else {
+            document.getElementById('navButtonUl').removeChild(document.getElementById('navButtonLi'));
+            document.getElementById('ifram').src='/api/ocr/val_tion_retrieve/';
+        }
+        document.getElementById('details_name').innerText=los.details_name;
+        document.getElementById('User_Name').innerText=localStorage.user_code;
+    function open_url(case_id,image_name,separation_state,d) {
+        if(case_id=='url'){
+            window.open('/api/ocr/val_tion_pdf/');
+            return;
+        }
+        var obj=new Object();
+        obj['case_id']=case_id;
+        obj['image_name']=image_name;
+        obj['separation_state']=separation_state;
+        localStorage.srceach_details=JSON.stringify(obj);
+        window.open('/api/ocr/val_tion_invoice/')
+    }
+</script>
+<script>
+    //JavaScript代码区域
+    var ifra_click=null,closeALL_layer=null,url_login=null;
+    layui.use(['element','layer'], function(){
+        var element = layui.element;
+        var layer_index;
+        ifra_click=function (data,Src_){
+            var ifram=document.getElementById('ifram');
+            var Url=data;
+            if(Src_!==undefined){
+                Url=Url+'?type='+Src_
+            }
+            layer_index = layer.load(1, {shade: 0.5});
+            ifram.src=Url;
+        }
+        closeALL_layer=function () {
+            layer.close(layer_index)
+        }
+        url_login=function () {
+            window.location.href='/api/ocr/validation_logout/';
+        }
+    });
+</script>
+</body>
+</html>

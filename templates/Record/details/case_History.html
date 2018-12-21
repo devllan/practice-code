@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../../../static/record/css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../../../static/record/layui/css/layui.css">
+    <style>
+        #img_ID{
+            width:100%;
+            height:300px;
+            overflow: auto;
+        }
+        .loag{
+            width:30px;
+            height:30px;
+            position: fixed;
+            right: 50px;
+            top:30px;
+            border-radius: 50%;
+            background: #01AAED;
+            color:#fff;
+            font-size: 20px;
+            text-align: center;
+            line-height: 30px;
+            box-shadow: 0 0 8px 0 #01AAED;
+            transition: ease 0.5s;
+        }
+        .loags{
+            animation: anni 1s;
+            animation-iteration-count:100;
+        }
+        .loag:hover{
+            transform:rotate(360deg);
+            -ms-transform:rotate(360deg); 	/* IE 9 */
+            -moz-transform:rotate(360deg); 	/* Firefox */
+            -webkit-transform:rotate(360deg); /* Safari 和 Chrome */
+            -o-transform:rotate(360deg);
+        }
+        @keyframes anni
+        {
+            0%   {transform:rotate(0deg)}
+            100% {transform:rotate(360deg)}
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form" style="padding:10px;">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend id="title_type">案件历史</legend>
+    </fieldset>
+    <div class="loag" onclick="lodin_s()" id="loag_id">
+        <i class="fa fa-rotate-right"></i>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs border_red" lay-event="edit" onclick="border_color(this)">查看</a>
+    </script>
+    <script type="text/html" id="barDemos">
+        <a class="layui-btn layui-btn-xs" lay-event="edits">查看</a>
+    </script>
+</div>
+<script src="../../../../../static/record/js/min.js"></script>
+<script src="../../../../../static/record/js/vue-resource.js"></script>
+<script src="../../../../../static/record/layui/layui.js"></script>
+<script src="../../../../../static/record/js/case_History.js"></script>
+<script>
+    function border_color(dom) {
+        var soms= document.getElementsByClassName('border_red');
+        var arr=new Array()
+        for(var i=0;i<soms.length;i++){
+            arr.push(soms[i].offsetWidth)
+        }
+        arr.sort();
+        arr.reverse();
+        for(var i=0;i<soms.length;i++){
+            soms[i].style.width=arr[1]+'px';
+        }
+        dom.style.width=(arr[1]+15)+'px';
+    }
+    parent.closeALL_layer();
+    var loag=document.getElementsByClassName('loag')[0];
+    var lodin_s;
+    var uploadDate=new uploadDate();
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        var index = layer.load(2,10);
+        var app=new Vue({
+            el:'#app'
+            ,data:{
+                msg:null
+                ,search_text:null
+            }
+            ,methods:{
+                init:function () {
+                    var _this=this;
+                    var obj=new Object();
+                    var clo=[[ //标题栏
+                        {field: 'business_id', title: '业务号码'}
+                        ,{field: 'create_time', title: '上传日期'}
+                        ,{field: 'state', title: '状态'}
+                        ,{fixed: 'right', toolbar: '#barDemo',title:'操作'}
+                    ]];
+                var url='/api/ocr/validation/supporting/?user_code='+localStorage.user_code;
+                    _this.$http.get(url).then(function(data){
+                        if(data.data.errorMsg===''){
+                            for(var i=0;i<data.data.successResult.length;i++){
+                                switch (data.data.successResult[i].state){
+                                    case 0:data.data.successResult[i].state='处理中';
+                                        break;
+                                    case 1:data.data.successResult[i].state='已处理';
+                                        break;
+                                    default:data.data.successResult[i].state='状态码错误';
+                                        break;
+                                }
+                            }
+                            uploadDate.list(data.data.successResult,clo)
+                        }
+                        layer.close(index)
+                    }, function(err){
+                        console.log(err)
+                    })
+                }
+            }
+        });
+        app.init();
+    });
+
+</script>
+</body>
+</html>

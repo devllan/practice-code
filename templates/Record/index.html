@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <title>数美科技管理系统</title>
+    <link rel="stylesheet" href="../../../../static/record/layui/css/layui.css">
+    <style>
+        iframe{
+            height:99%;
+            width:100%;
+        }
+        .navButtonList{
+            display: none;
+        }
+    </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div id="details_name" class="layui-logo"></div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="/api/ocr/val_logout/">退出登录</a></li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <!--<ul id="navButtonUl" class="layui-nav layui-nav-tree"  lay-filter="test">-->
+                <!--<li class="layui-nav-item"><a href="#" onclick="ifra_click('/Record/details/case_upload.html')">案件上传</a></li>-->
+                <!--<li class="layui-nav-item"><a href="#" onclick="ifra_click('/Record/details/case_History.html')">案件补录</a></li>-->
+                <!--<li class="layui-nav-item"><a href="#" onclick="ifra_click('/Record/details/case_supplement.html')">案件补传</a></li>-->
+            <!--</ul>-->
+            <ul id="navButtonUl" class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item"><a href="#" onclick="ifra_click('/api/ocr/val_upload/')">案件上传</a></li>
+                <li class="layui-nav-item"><a href="#" onclick="ifra_click('/api/ocr/val_history/')">案件补录</a></li>
+                <li class="layui-nav-item"><a href="#" onclick="ifra_click('/api/ocr/val_supplement/')">案件补传</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <iframe id="ifram" name="ALL_Son" src="/api/ocr/val_upload/" style="margin:0;padding:0;" frameborder="0"></iframe>
+    </div>
+    <div class="layui-footer">
+        © 技术支持由数美科技提供
+    </div>
+</div>
+
+<script src="../../../../static/record/js/min.js"></script>
+<script src="../../../../static/record/layui/layui.js"></script>
+<script>
+    //JavaScript代码区域
+    var ifra_click=null,closeALL_layer=null,url_login=null;
+    layui.use(['element','layer'], function(){
+        var element = layui.element;
+        var layer_index;
+        ifra_click=function (data,Src_){
+            var ifram=document.getElementById('ifram');
+            var Url=data;
+            if(Src_!==undefined){
+                Url=Url+'?type='+Src_
+            }
+            layer_index = layer.load(1, {shade: 0.5});
+            ifram.src=Url;
+        }
+        closeALL_layer=function () {
+            layer.close(layer_index)
+        }
+        url_login=function () {
+            window.location.href='/api/ocr/validation_logout/';
+        }
+    });
+</script>
+</body>
+</html>

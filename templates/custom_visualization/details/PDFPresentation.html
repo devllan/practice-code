@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body,html{  margin:0;padding:0;  }
+        .box{  left:0;  top:0;  background: #fff;  position:fixed;  overflow:auto;  height:100%;  width:100%;  }
+        .boxs{  background: #fff;  }
+        .PDF{  margin:0 auto;  width:791px;  }
+        .text{  width:80%;  margin:0 auto;  }
+        .text h1{  text-align: center;  }
+        .text hr{  border:2px solid #ed7d31;  }
+        .span_red{  color:red;  }
+        .zhengwen{  width:90%;  margin:0 auto;  }
+        .col_3_center{  display: flex;  justify-content: space-between;  }
+        .tables {  border-collapse: collapse;  width:100%;  }
+        img{  width:90%;  margin:0 5%;  }
+        #positions{
+            animation-name:positions;
+        }
+        @media only screen and (min-width: 481px){
+            #positions {
+                font-size: 94%!important; /* 15.04÷16=94% */
+            }
+        }
+        @media only screen and (min-width: 561px){
+            #positions {
+                font-size: 80%!important; /* 17.44÷16=109% */
+            }
+        }
+        @media only screen and (min-width: 641px){
+            #positions {
+                font-size: 185%!important; /* 20÷16=125% */
+            }
+        }
+        #position_PDF{  margin:0 auto;  }
+        #xiazai{  width:120px;  height:40px;  background:#009688;  border:0;  color:#fff;  -webkit-border-radius: 3px;  -moz-border-radius: 3px;  border-radius: 3px;  position:fixed;  bottom:20px;  right: 30px;  z-index: 9;  }
+        #xiazai:focus{background:#007066;}
+        #loading_mote{  width:100%;  height:100%;  background:rgba(0,0,0,.2);  position:fixed;  z-index: 10;  transition:ease 1s ;  }
+        .loading_mote_text{  width:100%;  height:60px;  color:#fff;  font-size: 24px;  text-align: center;  line-height: 60px;  background:#009688;  }
+    </style>
+</head>
+<body>
+<div id="loading_mote">
+    <div class="loading_mote_text">正在加载数据</div>
+</div>
+    <button id="xiazai" class="layui-btn layui-btn-lg" onclick="fors_img_PDF()">下载PDF</button>
+    <div style="">
+        <div class="boxs">
+            <div class="PDF"  id="positions" style="font-size: 30px;width:1366px;background:#fff;">
+                <div class="text" id="position_PDF"  style="background:#fff;"></div>
+            </div>
+        </div>
+    </div>
+    <div id="app" class="box">
+        <div class="PDF">
+            <div class="text">
+                <div class="title_boxs">
+                    <br>
+                    <h1>商业保险医疗费用分析报告</h1>
+                    <hr>
+                    <p>尊敬的 <span class="span_red user_name">--</span> 先生/女士：</p>
+                    <p>您好！您的赔付申请我们已经收到，经过审慎核定您的申请资料，将本次理赔结果中，
+                        医疗赔付的审核结果，向您通知如下：
+                    </p>
+                    <br>
+                </div>
+                <div class="zhengwen title_boxs">
+                        <p>基本情况：</p>
+                        <div class="col_3_center">
+                            <span>申请人：<span class="span_red user_name">--</span></span>
+                            <span>性别：<span class="span_red user_Gender">--</span></span>
+                            <span>年龄：<span class="span_red user_age">--</span></span>
+                        </div>
+                        <br>
+                        <p>理赔申请情况：</p>
+                        <p>上传单证数量：<span class="span_red user_number" v-text="msg.data.pres_data.length"></span></p>
+                        <table border="1" class="tables">
+                            <tr>
+                                <th>序号</th>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>年龄</th>
+                                <th>备注</th>
+                            </tr>
+                            <tr class="span_red" v-for="(index,ite) in msg.data.pres_data" style="text-align: center">
+                                <td v-text="ite"></td>
+                                <td v-text="index.name"></td>
+                                <td v-text="index.sex">10000</td>
+                                <td v-text="index.age"></td>
+                                <td v-text="index.diagnose"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="table_box">
+                        <div v-for="i in msg.data.pres_data">
+                            <div class="zhengwen title_boxs zhengwen_table">
+                                <p>医疗费用审核情况：（单证编号：<span class="span_red" v-text="i.id">10000</span>）</p>
+                                <table border="1" class="tables">
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>类别</th>
+                                        <th>结果</th>
+                                        <th>备注</th>
+                                    </tr>
+                                    <tr class="span_red" style="text-align: center">
+                                        <td>0</td>
+                                        <td>单证编号</td>
+                                        <td v-text="i.id"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="span_red" style="text-align: center">
+                                        <td>1</td>
+                                        <td>医疗类别</td>
+                                        <td v-text="i.department"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="span_red" style="text-align: center">
+                                        <td>2</td>
+                                        <td>就诊时间</td>
+                                        <td v-text="i.times"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="span_red" style="text-align: center">
+                                        <td>3</td>
+                                        <td>就诊医院</td>
+                                        <td v-text="i.hospital_name"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="span_red" style="text-align: center">
+                                        <td>4</td>
+                                        <td>医院编码</td>
+                                        <td v-text="i.hospital"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="span_red" style="text-align: center">
+                                        <td>5</td>
+                                        <td>疾病名称</td>
+                                        <td v-text="i.diagnose"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="span_red" style="text-align: center">
+                                        <td>6</td>
+                                        <td>疾病编码</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="span_red" style="text-align: center">
+                                        <td>7</td>
+                                        <td>药品数目</td>
+                                        <td v-text="i.drug_type_count"></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="zhengwen title_boxs zhengwen_table">
+                                <p>使用药品情况：（单证编号：<span class="span_red" v-text="i.id"></span>）</p>
+                                <table border="1" class="tables">
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>药品名称</th>
+                                        <th>药品品规</th>
+                                        <th>服用方法</th>
+                                        <th>药品分类</th>
+                                        <th>医保类别</th>
+                                        <th>备注</th>
+                                    </tr>
+                                    <tr class="span_red"  v-for="(ite,index) in i.medicine" style="text-align: center">
+                                        <td v-text="index"></td>
+                                        <td v-text="ite.drug_name">氯沙坦甲片</td>
+                                        <td v-text="ite.drug_regulation">（科素亚）50mg*7 片</td>
+                                        <td v-text="ite.mode_of_use">口服</td>
+                                        <td v-text="ite.drug_type">西药</td>
+                                        <td v-text="(ite.drug_class==0)? '非医保': '医保'">有医保</td>
+                                        <td v-text=""></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="zhengwen title_boxs">
+                        <p>审核情况：</p>
+                        <p class="span_red" style="padding-left:5%;">符合要求。</p>
+                        <hr>
+                        <div style="text-indent: 5%">
+                            <p>特别声明：</p>
+                            <p>1、本报告由北京数美科技有限公司技术完成；</p>
+                            <p>2、本报告基于客户提交数据完成，仅作为分析结果，不作为领款凭证，如有赔付则保险金款项将于本清单打印后二到十个工作日内以银行转账或其它方式是给付；</p>
+                            <p>3、本报告中药品分类目录，参照卫计委网站结果；</p>
+                            <p>4、关于支付明细，参照理赔通知书查阅详情；</p>
+                            <p>5、如您对理赔结果有疑问，可在收到本通知后 30 个工作日内通过以下方式进行处理：拨打本公司全国服务热线 95***或登陆网站 www..***，通过在线客服查询。</p>
+                        </div>
+                    </div>
+                <div class=" imgs__"  v-for="(i,index) in msg.data.pres_data">
+                    <p>附件 <span v-text="index+1"></span>：（单证编号：<span class="span_red" v-text="i.id">10000</span>）</p>
+                    <img v-bind:src="i.image_url" alt="" @load="img_onload">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../../static/custom_visualization/js/jquery-2.1.1.min.js"></script>
+    <script src="../../../../../static/custom_visualization/js/min.js"></script>
+    <script src="../../../../../static/custom_visualization/js/vue-resource.js"></script>
+    <script src="../../../../../static/custom_visualization/js/html2canvas.js"></script>
+    <script src="../../../../../static/custom_visualization/js/jspdf.min.js"></script>
+
+    <script src="../../../../../static/custom_visualization/js/PDFPresentation.js"></script>
+</body>
+</html>
