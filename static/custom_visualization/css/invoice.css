@@ -121,3 +121,19 @@ body,html{height:99.9%;}
 .blackIdentification{
     background: rgba(0,0,0,.5);
 }
+/* 展示框样式 */
+#ShowDiv{
+    position: absolute;
+    width: 200px;
+    height: 20px;
+    border: 2px solid #fc5943;
+}
+/* 提交按钮样式 */
+#submit{
+    height: 40px;
+    background-color: #009688;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+}
