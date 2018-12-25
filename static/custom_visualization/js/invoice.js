@@ -29,7 +29,7 @@ var app = new Vue({
         console.log('created');
         var _this = this;
         // var srceach_details=JSON.parse(localStorage.srceach_details)
-        var url = './zuobiao.json';
+        var url = './json.json';
         // var url='/api/ocr/validation/the_case_all/?business_id='+srceach_details.business_id+'&user_code='+localStorage.user_code;
         this.$http.get(url).then(function (data) {
             var DataMsg = data.data.data;
@@ -66,11 +66,11 @@ var app = new Vue({
     methods: {
         init: function () {},
         flagCutting: function (flag) {
-                this.Flag = flag.split('');
-                return true
-            }
-            // 旋转效果
-            ,
+            this.Flag = flag.split('');
+            return true
+        },
+        // 旋转效果
+
         direction: function (data) {
                 var ImaGes = document.getElementsByClassName('imgButBox')[0];
                 console.log(ImaGes);
@@ -177,8 +177,6 @@ function mos(event) {
 }
 
 window.onload = function () {
-   
-
     //取后台坐标信息，实现随动展示框
     $.ajax({
         url: "./zuobiao.json",
@@ -209,8 +207,8 @@ window.onload = function () {
             console.log(NHeight);
             console.log(NWidth);
             // 缩放比例
-            var Wproportion = YWidth / NWidth;
-            var Yproportion = YHeight / NHeight;
+            var Wproportion = YWidth / NWidth; //X轴缩放比例
+            var Yproportion = YHeight / NHeight; //Y轴缩放比例
             console.log(Wproportion);
             console.log(Yproportion);
             for (var i = 0; i < coordinate_data.length; i++) {
@@ -237,9 +235,7 @@ window.onload = function () {
                     });
                     ShowInput[j].addEventListener("mouseleave", function leave() {
                         $("div").remove("#ShowDiv");
-                        $("div").remove("#NotShow");
                     });
-
                 }
             }
         }
