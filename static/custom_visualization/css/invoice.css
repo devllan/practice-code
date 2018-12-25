@@ -126,7 +126,8 @@ body,html{height:99.9%;}
     position: absolute;
     width: 200px;
     height: 20px;
-    border: 2px solid #fc5943;
+    background-color: rgba(0,150,136,.3);
+    /* border: 2px solid #fc5943; */
 }
 /* 提交按钮样式 */
 #submit{

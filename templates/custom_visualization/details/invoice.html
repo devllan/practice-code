@@ -831,7 +831,7 @@
                 <tbody>
                 <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==1" v-bind:class="{blackIdentification:Flag[index]==1}">
                     <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text='cos.project_name'>
+                        <div style="color:#000" v-text='cos.project_name' class="show">
                             <!-- <input type="text" placeholder="(空)" class="layui-input" v-model=""> -->
                         </div>
                     </td>
