@@ -1,3 +1,4 @@
+//localhost地址   http://localhost/sm/templates/custom_visualization/details/invoice.html
 // window.onload = function () {
 //     // 鼠标随动展示框
 //     var ShowInput = document.getElementsByClassName("show");

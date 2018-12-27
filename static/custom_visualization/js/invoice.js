@@ -1,3 +1,6 @@
+var url = './zuobiao4.json';
+// var srceach_details=JSON.parse(localStorage.srceach_details)  
+// var url='/api/ocr/validation/the_case_all/?business_id='+srceach_details.business_id+'&user_code='+localStorage.user_code;
 var dir = 0,
     der = 1;
 var app = new Vue({
@@ -28,8 +31,7 @@ var app = new Vue({
     created: function () {
         console.log('created');
         var _this = this;
-        // var srceach_details=JSON.parse(localStorage.srceach_details)
-        var url = './json.json';
+        // var srceach_details=JSON.parse(localStorage.srceach_details)  
         // var url='/api/ocr/validation/the_case_all/?business_id='+srceach_details.business_id+'&user_code='+localStorage.user_code;
         this.$http.get(url).then(function (data) {
             var DataMsg = data.data.data;
@@ -176,10 +178,10 @@ function mos(event) {
     console.log(movDom.style.left)
 }
 
+//取后台坐标信息，实现随动展示框         //化验单的
 window.onload = function () {
-    //取后台坐标信息，实现随动展示框
     $.ajax({
-        url: "./zuobiao.json",
+        url: url,
         type: "get",
         data: "",
         dataType: "json",
@@ -187,7 +189,7 @@ window.onload = function () {
         success: function (info) {
             let ShowInput = document.getElementsByClassName("show");
             var coordinate = info;
-            var coordinate_data = coordinate.data.cost_listing;
+            var coordinate_data = coordinate.data.laboratory;
             var Top_arr = [];
             var Width_arr = [];
             var Left_arr = [];
@@ -197,23 +199,14 @@ window.onload = function () {
                 YWidth = document.getElementById('ImaGes').naturalWidth,
                 YHeight = document.getElementById('ImaGes').naturalHeight,
                 ImaGes = document.getElementById("ImaGes");
-            console.log(YWidth);
-            console.log(YHeight);
             //页面内展示图像的div大小
-            var omtImg = document.getElementsByClassName('omtImg');
-            console.log(omtImg);
             var NWidth = ImaGes.clientHeight || ImaGes.offsetHeight;
             var NHeight = ImaGes.clientWidth || ImaGes.offsetWidth;
-            console.log(NHeight);
-            console.log(NWidth);
-            // 缩放比例
+            // 缩放比例   动态比例 根据比例调整展示框大小
             var Wproportion = YWidth / NWidth; //X轴缩放比例
             var Yproportion = YHeight / NHeight; //Y轴缩放比例
-            console.log(Wproportion);
-            console.log(Yproportion);
             for (var i = 0; i < coordinate_data.length; i++) {
-                var codte_data = coordinate_data[i].cos_project_list;
-                // console.log(codte_data);
+                var codte_data = coordinate_data[i].index_arr;
                 for (let j = 0; j < codte_data.length; j++) {
                     Top_arr.push(codte_data[j].top);
                     Left_arr.push(codte_data[j].left);
@@ -228,11 +221,8 @@ window.onload = function () {
                         Newdiv.style.width = Width_arr[j] / Wproportion + 'px';
                         Newdiv.style.height = Height_arr[j] / Yproportion + 'px';
                         $(".imgButBox").append(Newdiv);
-                        // console.log(Width_arr[j] / Wproportion);
-                        // console.log(Height_arr[j] / Wproportion);
-                        // console.log(Left_arr[j] / Wproportion);
-                        // console.log(Width_arr[j] / Wproportion);
                     });
+                    //鼠标离开删除展示框
                     ShowInput[j].addEventListener("mouseleave", function leave() {
                         $("div").remove("#ShowDiv");
                     });

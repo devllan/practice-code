@@ -17,42 +17,66 @@
 				"index_normal_value": "22.4-57.8",
 				"index_name": "\u4e0d\u9971\u548c\u94c1\u7ed3\u5408\u529b",
 				"index_unit": "umol/L",
-				"index_id": 22697
+				"index_id": 22697,
+				"width": "1",
+				"top": "1",
+				"height": "1",
+				"left": "1"
 			}, {
 				"index_flag": "0",
 				"index_value": "165.6",
 				"index_normal_value": "11-306.8",
 				"index_name": "\u94c1\u86cb\u767d",
 				"index_unit": "ng/ml",
-				"index_id": 22698
+				"index_id": 22698,
+				"width": "1",
+				"top": "1",
+				"height": "1",
+				"left": "1"
 			}, {
 				"index_flag": "0",
 				"index_value": "19.30",
 				"index_normal_value": "7.8-32.2",
 				"index_name": "\u8840\u6e05\u94c1",
 				"index_unit": "",
-				"index_id": 22699
+				"index_id": 22699,
+				"width": "1",
+				"top": "1",
+				"height": "1",
+				"left": "1"
 			}, {
 				"index_flag": "0",
 				"index_value": "54.90",
 				"index_normal_value": "54-77",
 				"index_name": "\u8840\u6e05\u603b\u94c1\u7ed3\u5408\u529b",
 				"index_unit": "umol/L",
-				"index_id": 22700
+				"index_id": 22700,
+				"width": "1",
+				"top": "1",
+				"height": "1",
+				"left": "1"
 			}, {
 				"index_flag": "0",
 				"index_value": "54.37",
 				"index_normal_value": ">10.0",
 				"index_name": "\u53f6\u9178",
 				"index_unit": "",
-				"index_id": 22701
+				"index_id": 22701,
+				"width": "1",
+				"top": "1",
+				"height": "1",
+				"left": "1"
 			}, {
 				"index_flag": "1",
 				"index_value": "900.00",
 				"index_normal_value": "133-675",
 				"index_name": "\u7ef4\u751f\u7d20B12",
 				"index_unit": "",
-				"index_id": 22702
+				"index_id": 22702,
+				"width": "1",
+				"top": "1",
+				"height": "1",
+				"left": "1"
 			}],
 			"\u6027\u522b": "",
 			"\u62a5\u544a\u65e5\u671f": "2018\u5e7410\u670802\u65e5",

@@ -1,0 +1,172 @@
+{
+    "ret_ts": 1545883245,
+    "case_id": "liuzhiqiang",
+    "data": {
+        "medical_record_home": [],
+        "other": [],
+        "cost_listing": [],
+        "invoice": [],
+        "medical_report": [],
+        "laboratory": [{
+            "diagnose": {
+                "position": {
+                    "width": "0",
+                    "top": "0",
+                    "height": "0",
+                    "left": "0"
+                },
+                "recognise": "0",
+                "value": "高血压"
+            },
+            "report_time": {
+                "position": {
+                    "width": "1",
+                    "top": "1",
+                    "height": "1",
+                    "left": "1"
+                },
+                "recognise": "1",
+                "value": "2018-12-28"
+            },
+            "image_name": "shumei.jpg",
+            "sex": {
+                "position": {
+                    "width": "1",
+                    "top": "1",
+                    "height": "1",
+                    "left": "1"
+                },
+                "recognise": "1",
+                "value": "男"
+            },
+            "name": {
+                "position": {
+                    "width": "11",
+                    "top": "11",
+                    "height": "11",
+                    "left": "11"
+                },
+                "recognise": "1",
+                "value": "刘志强"
+            },
+            "uuid": "liuzhiqiang",
+            "check_time": {
+                "position": {
+                    "width": "1",
+                    "top": "1",
+                    "height": "1",
+                    "left": "1"
+                },
+                "recognise": "1",
+                "value": "2018-12-27"
+            },
+            "hospital": {
+                "position": {
+                    "width": "5",
+                    "top": "5",
+                    "height": "5",
+                    "left": "5"
+                },
+                "recognise": "5",
+                "value": "北京大学附属医院"
+            },
+            "image_url": "http://182.92.106.16:8022/images/exhibited_picture/shumei_1544854747_9131_docx.jpg",
+            "index_arr": [{
+                "index_value": "8",
+                "index_name": "上皮细胞计数",
+                "height": "0",
+                "recognise": "0",
+                "index_flag": "3",
+                "index_normal_value": "",
+                "width": "0",
+                "index_unit": "",
+                "index_id": 1,
+                "top": "0",
+                "left": "0"
+            }, {
+                "index_value": "22",
+                "index_name": "白细胞计数",
+                "height": "800",
+                "recognise": "0",
+                "index_flag": "1",
+                "index_normal_value": "0-5",
+                "width": "800",
+                "index_unit": "",
+                "index_id": 2,
+                "top": "800",
+                "left": "500"
+            }, {
+                "index_value": "9",
+                "index_name": "尿糖",
+                "height": "500",
+                "recognise": "0",
+                "index_flag": "3",
+                "index_normal_value": "阴性",
+                "width": "500",
+                "index_unit": "",
+                "index_id": 3,
+                "top": "500",
+                "left": "50"
+            }, {
+                "index_value": "22",
+                "index_name": "白细胞计数",
+                "height": "600",
+                "recognise": "0",
+                "index_flag": "1",
+                "index_normal_value": "0-5",
+                "width": "259",
+                "index_unit": "",
+                "index_id": 2,
+                "top": "1280",
+                "left": "400"
+            }, {
+                "index_value": "22",
+                "index_name": "白细胞计数",
+                "height": "800",
+                "recognise": "0",
+                "index_flag": "1",
+                "index_normal_value": "0-5",
+                "width": "300",
+                "index_unit": "",
+                "index_id": 2,
+                "top": "700",
+                "left": "500"
+            }, {
+                "index_value": "22",
+                "index_name": "白细胞计数",
+                "height": "999",
+                "recognise": "0",
+                "index_flag": "1",
+                "index_normal_value": "0-5",
+                "width": "999",
+                "index_unit": "",
+                "index_id": 2,
+                "top": "999",
+                "left": "990"
+            }],
+            "department": {
+                "position": {
+                    "width": "8",
+                    "top": "8",
+                    "height": "8",
+                    "left": "8"
+                },
+                "recognise": "8",
+                "value": "神经内科门诊"
+            },
+            "age": {
+                "position": {
+                    "width": "0",
+                    "top": "0",
+                    "height": "0",
+                    "left": "0"
+                },
+                "recognise": "0",
+                "value": "55"
+            }
+        }],
+        "pres": []
+    },
+    "ret_cd": 200,
+    "suc_id": 1
+}

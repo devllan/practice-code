@@ -1597,7 +1597,7 @@
         <div class="imgAmdListBox">
             <div class="img_move_box" onmousedown="mos(event)">
                 <div class="imgButBox">
-                    <img id="ImaGes" :src="RenderingData['图片地址']" width="100%" alt="未找到图片">
+                    <img id="ImaGes" :src="RenderingData['image_url']" width="100%" alt="未找到图片">
                     <div class="omtImg"></div>
                 </div>
             </div>
@@ -1649,7 +1649,7 @@
                         <div>
                             <div>医院:</div>
                             <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData['医院']">
+                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.hospital.value">
                             </div>
                         </div>
                     </td>
@@ -1657,7 +1657,8 @@
                         <div>
                             <div>姓名:</div>
                             <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData['姓名']">
+                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.name.value">
+                                
                             </div>
                             
                         </div>
@@ -1666,6 +1667,7 @@
                         <div>
                             <div>年龄:</div>
                             <div style="color:#000">
+                                <!-- 待办：年龄性别，报告日期等未修改 -->
                                 <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData['年龄']">
                             </div>
                         </div>
@@ -1684,7 +1686,7 @@
                         <div>
                             <div>报告日期:</div>
                             <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData['报告日期']">
+                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.report_time.value">
                             </div>
                         </div>
                     </td>
@@ -1692,7 +1694,7 @@
                         <div>
                             <div>检验日期:</div>
                             <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData['检验日期']">
+                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.check_time.value">
                             </div>
                         </div>
                     </td>
@@ -1710,7 +1712,7 @@
                         <div>
                             <div>诊断:</div>
                             <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData['诊断']">
+                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.diagnose.value">
                             </div>
                         </div>
                     </td>
@@ -1733,10 +1735,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="lab in RenderingData.indicators">
+                <tr v-for="lab in RenderingData.index_arr">
                     <td>
-                        <div style="color:#000" >
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="lab.index_name">
+                        <div style="color:#000">
+                            <input type="text" placeholder="(空)" class="layui-input show" v-model="lab.index_name">
                         </div>
                     </td>
                     <td>
@@ -1805,7 +1807,7 @@
 <script src="../../../static/custom_visualization/js/jquery-2.1.1.min.js"></script>
 <script>
     var pCg=new pCg();
-    pCg.Load(['min.js','vue-resource.js','invoice.js','show.js']);
+    pCg.Load(['min.js','vue-resource.js','invoice.js']);
 </script>
 </body>
 </html>
