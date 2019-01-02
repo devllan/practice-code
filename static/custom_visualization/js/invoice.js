@@ -1,4 +1,4 @@
-var url = './zuobiao.json';
+var url = './zuobiao2.json';
 // var srceach_details=JSON.parse(localStorage.srceach_details)  
 // var url='/api/ocr/validation/the_case_all/?business_id='+srceach_details.business_id+'&user_code='+localStorage.user_code;
 var dir = 0,
@@ -227,13 +227,12 @@ window.onload = function () {
                         // Newdiv.style.top = Top_arr[j] / Yproportion + 'px';
                         Newdiv.style.width = Width_arr[j] / Wproportion + 'px';
                         Newdiv.style.height = Height_arr[j] / Yproportion + 'px';
-                        
-                        console.log((parseInt(Top_arr[j]) - parseInt(Height_arr[j])) / Yproportion);
-                        console.log((parseInt(Top_arr[j])/ Yproportion - parseInt(Height_arr[j])/ Yproportion) );
+                        Newdiv.style.top = Top_arr[j] / Yproportion + 'px';            
+                        // console.log((parseInt(Top_arr[j]) - parseInt(Height_arr[j])) / Yproportion);
+                        // console.log((parseInt(Top_arr[j])/ Yproportion - parseInt(Height_arr[j])/ Yproportion) );
                         console.log(Height_arr[j])
                         console.log(parseInt(Top_arr[j]))
-                        
-                        Newdiv.style.top = (parseInt(Top_arr[j]) - parseInt(Height_arr[j])) / Yproportion + 'px';
+                        // Newdiv.style.top = (parseInt(Top_arr[j]) - parseInt(Height_arr[j])) / Yproportion + 'px';
                         // Newdiv.style.top = Top_arr[j] / Yproportion + 'px';
                         $(".imgButBox").append(Newdiv);
                     });
