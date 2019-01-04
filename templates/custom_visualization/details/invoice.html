@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,1804 +12,1818 @@
     <link rel="stylesheet" href="../../../static/custom_visualization/css/font-awesome-4.7.0/css/font-awesome.min.css">
 
     <style type="text/css">
-        
         /************ Table ************/
-        .inTable {width: 100%;border-collapse: collapse;border: 1px solid #ccc;}
-        .inTable thead td {font-size: 12px;color: #333333;text-align: center;
+        .inTable {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+        }
+
+        .inTable thead td {
+            font-size: 12px;
+            color: #333333;
+            text-align: center;
             /*background: url(table_top.jpg) repeat-x top center;*/
-            border: 1px solid #ccc; font-weight:bold;}
-        .inTable tbody tr {font-size: 12px;color: #666666;}
-        .inTable tbody tr.alt-row {background: #f2f7fc;}
-        .inTable td{line-height:20px;text-align: left;padding:4px 10px 3px 10px;height: 18px;border: 1px solid #ccc;}
-        
+            border: 1px solid #ccc;
+            font-weight: bold;
+        }
+
+        .inTable tbody tr {
+            font-size: 12px;
+            color: #666666;
+        }
+
+        .inTable tbody tr.alt-row {
+            background: #f2f7fc;
+        }
+
+        .inTable td {
+            line-height: 20px;
+            text-align: left;
+            padding: 4px 10px 3px 10px;
+            height: 18px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
-<body>
-<div id="app">
-    <!--按钮list-->
-    <div id="appList">
-        <div>
-            <div>费用清单:</div>
-            <div
-                    v-for="list,index in inData.cost_listing"
-                    @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
-                    @mouseout="suspensionTitle_block(event,false)"
-                    v-text="'费用清单'+(index+1)" @click="ListClick('cost_listing',list)"
-                >
-            </div>
-        </div>
-        <div>
-            <div>发票:</div>
-            <div
-                    v-for="list,index in inData.invoice"
-                    @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
-                    @mouseout="suspensionTitle_block(event,false)"
-                    v-text="'发票'+(index+1)" @click="ListClick('invoice',list)"></div>
-        </div>
-        <div>
-            <div>化验单:</div>
-            <div
-                    v-for="list,index in inData.laboratory"
-                    @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
-                    @mouseout="suspensionTitle_block(event,false)"
-                    v-text="'化验单'+(index+1)" @click="ListClick('laboratory',list)"></div>
-        </div>
-        <div>
-            <div>病案首页:</div>
-            <div
-                    v-for="list,index in inData.medical_record_home "
-                    @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
-                    @mouseout="suspensionTitle_block(event,false)"
-                    v-text="'病案首页'+(index+1)" @click="ListClick('medical_record_home',list)"></div>
-        </div>
-        <div>
-            <div>影像报告，出入院报告:</div>
-            <div
-                    v-for="list,index in inData.medical_report"
-                    @mouseover="suspensionTitle_block(event,true,list.name,list.hospital)"
-                    @mouseout="suspensionTitle_block(event,false)"
-                    v-text="'影像报告，出入院报告'+(index+1)" @click="ListClick('medical_report',list)"></div>
-        </div>
-        <div>
-            <div>处方单:</div>
-            <div
-                    v-for="list,index in inData.pres"
-                    @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
-                    @mouseout="suspensionTitle_block(event,false)"
-                    v-text="'处方单'+(index+1)" @click="ListClick('pres',list)"></div>
-        </div>
-        <div>
-            <div>其他:</div>
-            <div v-for="list,index in inData.other" v-text="'其他'+(index+1)"  @click="ListClick('other',list)"></div>
-        </div>
-    </div>
-    <!--按钮list 浮动框-->
-    <div id="suspensionTitle"
-         @mouseover="suspensionTitle_block('mot')"
-         @mouseout="suspensionTitle_block('mot',false)"
-        ><div></div></div>
-    <!--发票-->
-    <div class="invoice" v-if="documentTypeList.invoice" v-for="i in inData.invoice">
-        <!-- 图像、控制列表 -->
-        <div class="imgAmdListBox">
-            <div class="img_move_box" onmousedown="mos(event)">
-                <div class="imgButBox">
-                    <img id="ImaGes" :src="i.image_url" width="100%" alt="未找到图片">
-                    <div class="omtImg"></div>
-                </div>
-            </div>
-            <!-- 按钮 List-->
-            <div class="direction">
-                <div>
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                    <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
-                    <!--</div>-->
-                    <div>
-                        <a style="color:#fff;" class="layui-btn">导出Excel</a>
-                    </div>
-                </div>
-                <div style="font-size: 30px;">
-                    <div>
-                        <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
-                    </div>
-                    <div>
-                        <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--信息展示-->
-        <div class="information">
-            <!--基本信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="3">基本信息</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <div>
-                            <div>医院编号:</div>
-                            <div style="color:#000" v-text="i.hospital_no"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>日期:</div>
-                            <div style="color:#000" v-text="i.date"></div>
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>发票编号:</div>
-                            <div style="color:#000" v-text="i.invoice_no"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>姓名:</div>
-                            <div style="color:#000" v-text="i.name"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>性别:</div>
-                            <div style="color:#000" v-text="i.sex"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>医保类型:</div>
-                            <div style="color:#000" v-text="i.medical_type"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[16]==1}">
-                        <div>
-                            <div>合计:</div>
-                            <div style="color:#000" v-text="i.total"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[10]==1}">
-                        <div>
-                            <div>自付一:</div>
-                            <div style="color:#000" v-text="i.self_conceit"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td v-bind:class="{greenIdentification:Flag[0]==1}">
-                        <div>
-                            <div>门诊大额支付:</div>
-                            <div style="color:#000" v-text="i.clinic_large_pay"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[5]==1}">
-                        <div>
-                            <div>本次医疗范围内金额:</div>
-                            <div style="color:#000" v-text="i.medical_pay"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[11]==1}">
-                        <div>
-                            <div>起付金额:</div>
-                            <div style="color:#000" v-text="i.amount_pay"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td v-bind:class="{greenIdentification:Flag[1]==1}">
-                        <div>
-                            <div>退休补充支付:</div>
-                            <div style="color:#000" v-text="i.retire_supplement_pay"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[6]==1}">
-                        <div>
-                            <div>累计医保范围内金额:</div>
-                            <div style="color:#000" v-text="i.accumulate_medical_pay"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[12]==1}">
-                        <div>
-                            <div>超封顶金额:</div>
-                            <div style="color:#000" v-text="i.capped_amount"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td v-bind:class="{greenIdentification:Flag[2]==1}">
-                        <div>
-                            <div>残军补助支付:</div>
-                            <div style="color:#000" v-text="i.remnant_subsidy_pay"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[7]==1}">
-                        <div>
-                            <div>年度门诊大额累计支付:</div>
-                            <div style="color:#000" v-text="i.year_clinic_large_pay"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[13]==1}">
-                        <div>
-                            <div>自付二:</div>
-                            <div style="color:#000" v-text="i.pay_two"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td v-bind:class="{greenIdentification:Flag[3]==1}">
-                        <div>
-                            <div>单位补充险[原公疗]支付:</div>
-                            <div style="color:#000" v-text="i.unit_supplement_pay"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[8]==1}">
-                        <div>
-                            <div>本次支付后个人账户余额:</div>
-                            <div style="color:#000" v-text="i.account_balance"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[14]==1}">
-                        <div>
-                            <div>自费:</div>
-                            <div style="color:#000" v-text="i.jewelry"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td v-bind:class="{greenIdentification:Flag[4]==1}">
-                        <div>
-                            <div>基金支付:</div>
-                            <div style="color:#000" v-text="i.fund_pay"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[9]==1}">
-                        <div>
-                            <div>个人账户支付:</div>
-                            <div style="color:#000" v-text="i.personal_pay"></div>
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:Flag[15]==1}">
-                        <div>
-                            <div>个人支付金额:</div>
-                            <div style="color:#000" v-text="i.individual_payment_amount"></div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--费用信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="3">费用信息</td>
-                </tr>
-                <tr>
-                    <td>项目名称</td>
-                    <td>金额</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="k in i.cost">
-                    <td v-text="k.cost_name"></td>
-                    <td v-text="k.cost_data"></td>
-                </tr>
-                </tbody>
-            </table>
-            <!--药品信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="7">药品信息</td>
-                </tr>
-                <tr>
-                    <td>药品名称</td>
-                    <td>药品数量</td>
-                    <td>药品规格</td>
-                    <td>药品价格</td>
-                    <td>药品等级</td>
-                    <td>药品单位</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="k in i.medical">
-                    <td v-text="k.medical_name"></td>
-                    <td v-text="k.medical_count"></td>
-                    <td v-text="k.medical_specifications"></td>
-                    <td v-text="k.medical_price"></td>
-                    <td v-text="k.medical_class"></td>
-                    <td v-text="k.medical_unit"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!--处方单-->
-    <div class="Prescription" v-if="documentTypeList.pres">
-        <!-- 图像、控制列表 -->
-        <div class="imgAmdListBox">
-            <div class="img_move_box" onmousedown="mos(event)">
-                <div class="imgButBox">
-                    <img id="ImaGes" :src="RenderingData.image_url" width="100%" alt="未找到图片">
-                    <div class="omtImg"></div>
-                </div>
-            </div>
-            <!-- 按钮 List-->
-            <div class="direction">
-                <div>
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加处方信息</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                    <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
-                    <!--</div>-->
-                    <div>
-                        <a style="color:#fff;" class="layui-btn">导出Excel</a>
-                    </div>
-                </div>
-                <div style="font-size: 30px;">
-                    <div>
-                        <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
-                    </div>
-                    <div>
-                        <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--信息展示-->
-        <div class="information">
-            <!--基本信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="6">基本信息</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td colspan="2">
-                        <div>
-                            <div>医院名称:</div>
-                            <div style="color:#000" v-text="RenderingData.hospital_name" style="width: 100%"></div>
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>医院编号:</div>
-                            <div style="color:#000" v-text="RenderingData.hospital"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>姓名:</div>
-                            <div style="color:#000" v-text="RenderingData.name"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>年龄:</div>
-                            <div style="color:#000" v-text="RenderingData.age"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>性别:</div>
-                            <div style="color:#000" v-text="RenderingData.sex"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>科室:</div>
-                            <div style="color:#000" v-text="RenderingData.department"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>疾病信息:</div>
-                            <div style="color:#000" v-text="RenderingData.diagnose"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>日期:</div>
-                            <div style="color:#000" v-text="RenderingData.times"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>药品金额:</div>
-                            <div style="color:#000" v-text="RenderingData.cost"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>药品数量:</div>
-                            <div style="color:#000" v-text="RenderingData.drug_type_count"></div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--处方信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="12">处方信息</td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <th>药品名称</th>
-                    <th>药品品规</th>
-                    <th>药品剂型</th>
-                    <th>使用方式</th>
-                    <th>使用剂量</th>
-                    <th>使用频次</th>
-                    <th>付费类型</th>
-                    <th>药品单价</th>
-                    <th>药品小计</th>
-                    <th>药品数量</th>
-                    <th>药品类型</th>
-                    <th>药品等级</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="pre,index in RenderingData.medicine">
-                    <td v-text="index+1"></td>
-                    <td>
-                        <div style="color:#000" v-text="pre.drug_name" style="width:100%;"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.drug_regulation"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.drug_dosage"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.mode_of_use"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.mode_of_use_dosage"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.usage_method"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.pay_type"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.drug_unit_price"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.drug_free"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.drug_count"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.drug_type"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="pre.drug_class"></div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!--影像报告，出入院报告-->
-    <div class="medicalReport" v-if="documentTypeList.medical_report" >
-        <!-- 图像、控制列表 -->
-        <div class="imgAmdListBox">
-            <div class="img_move_box" onmousedown="mos(event)">
-                <div class="imgButBox">
-                    <img id="ImaGes" :src="RenderingData.exihibitpic" width="100%" alt="未找到图片">
-                    <div class="omtImg"></div>
-                </div>
-            </div>
-            <!-- 按钮 List-->
-            <div class="direction">
-                <div>
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                    <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
-                    <!--</div>-->
-                    <div>
-                        <a style="color:#fff;" class="layui-btn">导出Excel</a>
-                    </div>
-                </div>
-                <div style="font-size: 30px;">
-                    <div>
-                        <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
-                    </div>
-                    <div>
-                        <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--信息展示-->
-        <div class="information">
-            <!--基本信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="6">基本信息</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <div>
-                            <div>医院:</div>
-                            <div style="color:#000" v-text="RenderingData.hospital_no"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>姓名:</div>
-                            <div style="color:#000" v-text="RenderingData.name"></div>
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>年龄:</div>
-                            <div style="color:#000" v-text="RenderingData.age"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>性别:</div>
-                            <div style="color:#000" v-text="RenderingData.sex"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>日期:</div>
-                            <div style="color:#000" v-text="RenderingData.date"></div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--检验信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="2">检验信息</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="med in RenderingData.medicals_data">
-                    <td v-text="med.key+'：'" width="150px"></td>
-                    <td>
-                        <div style="color:#000" v-text="med.value" style="width: 100%"></div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!--费用清单-->
-    <div class="costListing" v-if="documentTypeList.cost_listing" >
-        <!-- 图像、控制列表 -->
-        <div class="imgAmdListBox">
-            <div class="img_move_box" onmousedown="mos(event)">
-                <div class="imgButBox">
-                    <img id="ImaGes" :src="RenderingData.image_url" width="100%" alt="未找到图片">
-                    <div class="omtImg"></div>
-                </div>
-            </div>
-            <!-- 按钮 List-->
-            <div class="direction">
-                <div>
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                    <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
-                    <!--</div>-->
-                    <div>
-                        <a style="color:#fff;" class="layui-btn">导出Excel</a>
-                    </div>
-                </div>
-                <div style="font-size: 30px;">
-                    <div>
-                        <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
-                    </div>
-                    <div>
-                        <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--信息展示-->
-        <div class="information">
-            <!--医保信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="6">医保信息</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <div>
-                            <div>定点医疗机构名称:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.hospital_name">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>定点医疗机构编码:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.hospital_id">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>公民身份证号码:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.id_card">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>单证编号:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.test_cost_no">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>社保卡/手册编号:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.social_ensurance_card">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--基本信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="6">基本信息</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <div>
-                            <div>姓名:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.name">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>性别:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.sex">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>年龄:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.age">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>医疗参保人员类别:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.medical_person_type">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>共计天数:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.hospital_stay">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>费用总额:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.total_cost">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>项目数量:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.project_count_row">
-                            </div>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-            <!--西药费-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">西药费</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==1" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text='cos.project_name' class="show">
-                            <!-- <input type="text" placeholder="(空)" class="layui-input" v-model=""> -->
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--中成药费-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">中成药费</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==2" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text='cos.project_name'>
-                            <!-- <input type="text" placeholder="(空)" class="layui-input" v-model=""> -->
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--床位费-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">床位费</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==3" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text='cos.project_name'>
-                            <!-- <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_name"> -->
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--检查费-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">检查费</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==4" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text='cos.project_name'>
-                            <!-- <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_name"> -->
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--治疗费-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">治疗费</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==5" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text="cos.project_name"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000" v-text="">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--护理费-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">护理费</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==6" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text="cos.project_name"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--手术费-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">手术费</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==7" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text="cos.project_name"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--接生费-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">接生费</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==8" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text="cos.project_name"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--保健品-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">保健品</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==10" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text="cos.project_name"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--其他-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">其他</td>
-                </tr>
-                <tr>
-                    <th>名称</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>金额</th>
-                    <th>规格</th>
-                    <th>类别</th>
-                    <th>打分</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==9" v-bind:class="{blackIdentification:Flag[index]==1}">
-                    <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
-                        <div style="color:#000" v-text="cos.project_name"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
-                        </div>
-                    </td>
-                    <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <!--项目所属类别-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="20">项目所属类别</td>
-                </tr>
-                <tr>
-                    <th ></th>
-                    <th >名称</th>
-                    <th >类别名称</th>
-                    <th >一级类目</th>
-                    <th >二级类目</th>
-                    <th >三级类目</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="cos,index in RenderingData.type_list">
-                    <td v-text="index+1"></td>
-                    <td>
-                        <div style="color:#000" v-text="cos.project_name"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="cos.drug_type_name"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="cos.first_class_category"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="cos.class_two_category"></div>
-                    </td>
-                    <td>
-                        <div style="color:#000" v-text="cos.class_three_category"></div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!--病案首页-->
-    <div class="medicalRecordHome" v-if="documentTypeList.medical_record_home" >
-        <!-- 图像、控制列表 -->
-        <div class="imgAmdListBox">
-            <div class="img_move_box" onmousedown="mos(event)">
-                <div class="imgButBox">
-                    <img id="ImaGes" :src="RenderingData.image_url" width="100%" alt="未找到图片">
-                    <div class="omtImg"></div>
-                </div>
-            </div>
-            <!-- 按钮 List-->
-            <div class="direction">
-                <div>
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                    <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
-                    <!--</div>-->
-                    <div>
-                        <a style="color:#fff;" class="layui-btn">导出Excel</a>
-                    </div>
-                </div>
-                <div style="font-size: 30px;">
-                    <div>
-                        <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
-                    </div>
-                    <div>
-                        <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--信息展示-->
-        <div class="information">
-            <!--基本信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="6">基本信息</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <div>
-                            <div>医院名称:</div>
-                            <div style="color:#000" v-text="RenderingData.hospital_name"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>组织机构代码:</div>
-                            <div style="color:#000" v-text="RenderingData.group_id"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>姓名:</div>
-                            <div style="color:#000" v-text="RenderingData.name"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>性别:</div>
-                            <div style="color:#000" v-text="RenderingData.sex"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>出生日期:</div>
-                            <div style="color:#000" v-text="RenderingData.date_of_birth"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>年龄:</div>
-                            <div style="color:#000" v-text="RenderingData.age"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>国籍:</div>
-                            <div style="color:#000" v-text="RenderingData.nationality"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>民族:</div>
-                            <div style="color:#000" v-text="RenderingData.family_name"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>现住址:</div>
-                            <div style="color:#000" v-text="RenderingData.present_address"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>户口地址:</div>
-                            <div style="color:#000" v-text="RenderingData.account_address"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>身份证:</div>
-                            <div style="color:#000" v-text="RenderingData.id_card"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>职业:</div>
-                            <div style="color:#000" v-text="RenderingData.occupation"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>入院次数:</div>
-                            <div style="color:#000" v-text="RenderingData.number_of_hospitalization"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>入院途径:</div>
-                            <div style="color:#000" v-text="RenderingData.admission_route"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>入院科别:</div>
-                            <div style="color:#000" v-text="RenderingData.out_department"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>入院时间:</div>
-                            <div style="color:#000" v-text="RenderingData.hospital_stay"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>住院天数:</div>
-                            <div style="color:#000" v-text="RenderingData.hospital_days"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>出院诊断:</div>
-                            <div style="color:#000" v-text="RenderingData.disease_name"></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>门（急）诊诊断:</div>
-                            <div style="color:#000" v-text="RenderingData.diagnosis"></div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>疾病编码:</div>
-                            <div style="color:#000" v-text="RenderingData.disease_id">
-                            
-                            </div>
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!--化验单-->
-    <div class="laboratory" v-if="documentTypeList.laboratory" >
-        <!-- 图像、控制列表 -->
-        <div class="imgAmdListBox">
-            <div class="img_move_box" onmousedown="mos(event)">
-                <div class="imgButBox">
-                    <img id="ImaGes" :src="RenderingData['image_url']" width="100%" alt="未找到图片">
-                    <div class="omtImg"></div>
-                </div>
-            </div>
-            <!-- 按钮 List-->
-            <div class="direction">
-                <div>
-                    <!-- <div>-->
-                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                    <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
-                    <!--</div> -->
-                    <div>
-                        <a style="color:#fff;" class="layui-btn">导出Excel</a>
-                    </div>
-                </div>
-                <div style="font-size: 30px;">
-                    <div>
-                        <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
-                    </div>
-                    <div>
-                        <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--信息展示-->
-        <div class="information">
-            <form>
-            <!--基本信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="6">基本信息</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <div>
-                            <div>医院:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.hospital.value">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>姓名:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.name.value">
-                                
-                            </div>
-                            
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>年龄:</div>
-                            <div style="color:#000">
-                                <!-- 待办：年龄性别，报告日期等未修改 -->
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData['年龄']">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>性别:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData['性别']">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>报告日期:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.report_time.value">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>检验日期:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.check_time.value">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <div>科室:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData['科室']">
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <div>诊断:</div>
-                            <div style="color:#000">
-                                <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.diagnose.value">
-                            </div>
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-            <!--处方信息-->
-            <table class="inTable">
-                <thead>
-                <tr>
-                    <td colspan="6">处方信息</td>
-                </tr>
-                <tr>
-                    <th>指标名称</th>
-                    <th>指标正常值范围</th>
-                    <th>单位</th>
-                    <th>指标值</th>
-                    <th>标识</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="lab in RenderingData.index_arr">
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input show" v-model="lab.index_name">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="lab.index_normal_value">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input" v-model="lab.index_unit">
-                        </div>
-                    </td>
-                    <td>
-                        <div style="color:#000">
-                            <input type="text" placeholder="(空)" class="layui-input Value" v-model="lab.index_value">
-                        </div>
-                    </td>
-                    <td style="text-align: center">
-                        <i v-if="lab.index_flag==1" class="fa fa-arrow-up"></i>
-                        <i v-if="lab.index_flag==2" class="fa fa-arrow-down"></i>
-                        <i v-if="lab.index_flag==0" style="color:#5daf34;" class="fa fa-circle"></i>
-                        <i v-if="lab.index_flag==3" style="color: #999" class="fa fa-circle"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="5">
-                        <input type="submit" value='提交修改' id="submit">
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
-        </div>
-    </div>
-    <!--其他-->
-    <div class="other" v-if="documentTypeList.other" v-for="i in inData.other">
-        <!-- 图像、控制列表 -->
-        <div class="imgAmdListBox">
-            <div class="img_move_box" onmousedown="mos(event)">
-                <div class="imgButBox">
-                    <img id="ImaGes" :src="i.image_url" width="100%" alt="未找到图片">
-                    <div class="omtImg"></div>
-                </div>
-            </div>
-            <!-- 按钮 List-->
-            <div class="direction">
-                <div style="font-size: 30px;">
-                    <div>
-                        <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
-                    </div>
-                    <div>
-                        <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
-                    </div>
-                    <div>
-                        <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<script src="../../../static/custom_visualization/js/ProhibitCaching.js"></script>
-<script>
-    var pCg=new pCg();
-    pCg.Load(['min.js','vue-resource.js','invoice.js']);
-</script>
-<script src="../../../static/custom_visualization/js/jquery-2.1.1.min.js" async></script>
+<body>
+    <div id="app">
+        <!--按钮list-->
+        <div id="appList">
+            <div>
+                <div>费用清单:</div>
+                <div v-for="list,index in inData.cost_listing" @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
+                    @mouseout="suspensionTitle_block(event,false)" v-text="'费用清单'+(index+1)" @click="ListClick('cost_listing',list)">
+                </div>
+            </div>
+            <div>
+                <div>发票:</div>
+                <div v-for="list,index in inData.invoice" @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
+                    @mouseout="suspensionTitle_block(event,false)" v-text="'发票'+(index+1)" @click="ListClick('invoice',list)"></div>
+            </div>
+            <div>
+                <div>化验单:</div>
+                <div v-for="list,index in inData.laboratory" @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
+                    @mouseout="suspensionTitle_block(event,false)" v-text="'化验单'+(index+1)" @click="ListClick('laboratory',list)"></div>
+            </div>
+            <div>
+                <div>病案首页:</div>
+                <div v-for="list,index in inData.medical_record_home " @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
+                    @mouseout="suspensionTitle_block(event,false)" v-text="'病案首页'+(index+1)" @click="ListClick('medical_record_home',list)"></div>
+            </div>
+            <div>
+                <div>影像报告，出入院报告:</div>
+                <div v-for="list,index in inData.medical_report" @mouseover="suspensionTitle_block(event,true,list.name,list.hospital)"
+                    @mouseout="suspensionTitle_block(event,false)" v-text="'影像报告，出入院报告'+(index+1)" @click="ListClick('medical_report',list)"></div>
+            </div>
+            <div>
+                <div>处方单:</div>
+                <div v-for="list,index in inData.pres" @mouseover="suspensionTitle_block(event,true,list.name,list.hospital_name)"
+                    @mouseout="suspensionTitle_block(event,false)" v-text="'处方单'+(index+1)" @click="ListClick('pres',list)"></div>
+            </div>
+            <div>
+                <div>其他:</div>
+                <div v-for="list,index in inData.other" v-text="'其他'+(index+1)" @click="ListClick('other',list)"></div>
+            </div>
+        </div>
+        <!--按钮list 浮动框-->
+        <div id="suspensionTitle" @mouseover="suspensionTitle_block('mot')" @mouseout="suspensionTitle_block('mot',false)">
+            <div></div>
+        </div>
+        <!--发票-->
+        <div class="invoice" v-if="documentTypeList.invoice" v-for="i in inData.invoice">
+            <!-- 图像、控制列表 -->
+            <div class="imgAmdListBox">
+                <div class="img_move_box" onmousedown="mos(event)">
+                    <div class="imgButBox">
+                        <img id="ImaGes" :src="i.image_url" width="100%" alt="未找到图片">
+                        <div class="omtImg"></div>
+                    </div>
+                </div>
+                <!-- 按钮 List-->
+                <div class="direction">
+                    <div>
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
+                        <!--</div>-->
+                        <div>
+                            <a style="color:#fff;" class="layui-btn">导出Excel</a>
+                        </div>
+                    </div>
+                    <div style="font-size: 30px;">
+                        <div>
+                            <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
+                        </div>
+                        <div>
+                            <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--信息展示-->
+            <div class="information">
+                <!--基本信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="3">基本信息</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>医院编号:</div>
+                                    <div style="color:#000" v-text="i.hospital_no"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>日期:</div>
+                                    <div style="color:#000" v-text="i.date"></div>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>发票编号:</div>
+                                    <div style="color:#000" v-text="i.invoice_no"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>姓名:</div>
+                                    <div style="color:#000" v-text="i.name"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>性别:</div>
+                                    <div style="color:#000" v-text="i.sex"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>医保类型:</div>
+                                    <div style="color:#000" v-text="i.medical_type"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[16]==1}">
+                                <div>
+                                    <div>合计:</div>
+                                    <div style="color:#000" v-text="i.total"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[10]==1}">
+                                <div>
+                                    <div>自付一:</div>
+                                    <div style="color:#000" v-text="i.self_conceit"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td v-bind:class="{greenIdentification:Flag[0]==1}">
+                                <div>
+                                    <div>门诊大额支付:</div>
+                                    <div style="color:#000" v-text="i.clinic_large_pay"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[5]==1}">
+                                <div>
+                                    <div>本次医疗范围内金额:</div>
+                                    <div style="color:#000" v-text="i.medical_pay"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[11]==1}">
+                                <div>
+                                    <div>起付金额:</div>
+                                    <div style="color:#000" v-text="i.amount_pay"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td v-bind:class="{greenIdentification:Flag[1]==1}">
+                                <div>
+                                    <div>退休补充支付:</div>
+                                    <div style="color:#000" v-text="i.retire_supplement_pay"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[6]==1}">
+                                <div>
+                                    <div>累计医保范围内金额:</div>
+                                    <div style="color:#000" v-text="i.accumulate_medical_pay"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[12]==1}">
+                                <div>
+                                    <div>超封顶金额:</div>
+                                    <div style="color:#000" v-text="i.capped_amount"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td v-bind:class="{greenIdentification:Flag[2]==1}">
+                                <div>
+                                    <div>残军补助支付:</div>
+                                    <div style="color:#000" v-text="i.remnant_subsidy_pay"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[7]==1}">
+                                <div>
+                                    <div>年度门诊大额累计支付:</div>
+                                    <div style="color:#000" v-text="i.year_clinic_large_pay"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[13]==1}">
+                                <div>
+                                    <div>自付二:</div>
+                                    <div style="color:#000" v-text="i.pay_two"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td v-bind:class="{greenIdentification:Flag[3]==1}">
+                                <div>
+                                    <div>单位补充险[原公疗]支付:</div>
+                                    <div style="color:#000" v-text="i.unit_supplement_pay"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[8]==1}">
+                                <div>
+                                    <div>本次支付后个人账户余额:</div>
+                                    <div style="color:#000" v-text="i.account_balance"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[14]==1}">
+                                <div>
+                                    <div>自费:</div>
+                                    <div style="color:#000" v-text="i.jewelry"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td v-bind:class="{greenIdentification:Flag[4]==1}">
+                                <div>
+                                    <div>基金支付:</div>
+                                    <div style="color:#000" v-text="i.fund_pay"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[9]==1}">
+                                <div>
+                                    <div>个人账户支付:</div>
+                                    <div style="color:#000" v-text="i.personal_pay"></div>
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:Flag[15]==1}">
+                                <div>
+                                    <div>个人支付金额:</div>
+                                    <div style="color:#000" v-text="i.individual_payment_amount"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--费用信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="3">费用信息</td>
+                        </tr>
+                        <tr>
+                            <td>项目名称</td>
+                            <td>金额</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="k in i.cost">
+                            <td v-text="k.cost_name"></td>
+                            <td v-text="k.cost_data"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--药品信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="7">药品信息</td>
+                        </tr>
+                        <tr>
+                            <td>药品名称</td>
+                            <td>药品数量</td>
+                            <td>药品规格</td>
+                            <td>药品价格</td>
+                            <td>药品等级</td>
+                            <td>药品单位</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="k in i.medical">
+                            <td v-text="k.medical_name"></td>
+                            <td v-text="k.medical_count"></td>
+                            <td v-text="k.medical_specifications"></td>
+                            <td v-text="k.medical_price"></td>
+                            <td v-text="k.medical_class"></td>
+                            <td v-text="k.medical_unit"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--处方单-->
+        <div class="Prescription" v-if="documentTypeList.pres">
+            <!-- 图像、控制列表 -->
+            <div class="imgAmdListBox">
+                <div class="img_move_box" onmousedown="mos(event)">
+                    <div class="imgButBox">
+                        <img id="ImaGes" :src="RenderingData.image_url" width="100%" alt="未找到图片">
+                        <div class="omtImg"></div>
+                    </div>
+                </div>
+                <!-- 按钮 List-->
+                <div class="direction">
+                    <div>
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加处方信息</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
+                        <!--</div>-->
+                        <div>
+                            <a style="color:#fff;" class="layui-btn">导出Excel</a>
+                        </div>
+                    </div>
+                    <div style="font-size: 30px;">
+                        <div>
+                            <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
+                        </div>
+                        <div>
+                            <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--信息展示-->
+            <div class="information">
+                <!--基本信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="6">基本信息</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <div>
+                                    <div>医院名称:</div>
+                                    <div style="color:#000" v-text="RenderingData.hospital_name" style="width: 100%"></div>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>医院编号:</div>
+                                    <div style="color:#000" v-text="RenderingData.hospital"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>姓名:</div>
+                                    <div style="color:#000" v-text="RenderingData.name"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>年龄:</div>
+                                    <div style="color:#000" v-text="RenderingData.age"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>性别:</div>
+                                    <div style="color:#000" v-text="RenderingData.sex"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>科室:</div>
+                                    <div style="color:#000" v-text="RenderingData.department"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>疾病信息:</div>
+                                    <div style="color:#000" v-text="RenderingData.diagnose"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>日期:</div>
+                                    <div style="color:#000" v-text="RenderingData.times"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>药品金额:</div>
+                                    <div style="color:#000" v-text="RenderingData.cost"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>药品数量:</div>
+                                    <div style="color:#000" v-text="RenderingData.drug_type_count"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--处方信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="12">处方信息</td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>药品名称</th>
+                            <th>药品品规</th>
+                            <th>药品剂型</th>
+                            <th>使用方式</th>
+                            <th>使用剂量</th>
+                            <th>使用频次</th>
+                            <th>付费类型</th>
+                            <th>药品单价</th>
+                            <th>药品小计</th>
+                            <th>药品数量</th>
+                            <th>药品类型</th>
+                            <th>药品等级</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="pre,index in RenderingData.medicine">
+                            <td v-text="index+1"></td>
+                            <td>
+                                <div style="color:#000" v-text="pre.drug_name" style="width:100%;"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.drug_regulation"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.drug_dosage"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.mode_of_use"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.mode_of_use_dosage"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.usage_method"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.pay_type"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.drug_unit_price"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.drug_free"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.drug_count"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.drug_type"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="pre.drug_class"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--影像报告，出入院报告-->
+        <div class="medicalReport" v-if="documentTypeList.medical_report">
+            <!-- 图像、控制列表 -->
+            <div class="imgAmdListBox">
+                <div class="img_move_box" onmousedown="mos(event)">
+                    <div class="imgButBox">
+                        <img id="ImaGes" :src="RenderingData.exihibitpic" width="100%" alt="未找到图片">
+                        <div class="omtImg"></div>
+                    </div>
+                </div>
+                <!-- 按钮 List-->
+                <div class="direction">
+                    <div>
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
+                        <!--</div>-->
+                        <div>
+                            <a style="color:#fff;" class="layui-btn">导出Excel</a>
+                        </div>
+                    </div>
+                    <div style="font-size: 30px;">
+                        <div>
+                            <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
+                        </div>
+                        <div>
+                            <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--信息展示-->
+            <div class="information">
+                <!--基本信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="6">基本信息</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>医院:</div>
+                                    <div style="color:#000" v-text="RenderingData.hospital_no"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>姓名:</div>
+                                    <div style="color:#000" v-text="RenderingData.name"></div>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>年龄:</div>
+                                    <div style="color:#000" v-text="RenderingData.age"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>性别:</div>
+                                    <div style="color:#000" v-text="RenderingData.sex"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>日期:</div>
+                                    <div style="color:#000" v-text="RenderingData.date"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--检验信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="2">检验信息</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="med in RenderingData.medicals_data">
+                            <td v-text="med.key+'：'" width="150px"></td>
+                            <td>
+                                <div style="color:#000" v-text="med.value" style="width: 100%"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--费用清单-->
+        <div class="costListing" v-if="documentTypeList.cost_listing">
+            <!-- 图像、控制列表 -->
+            <div class="imgAmdListBox">
+                <div class="img_move_box" onmousedown="mos(event)">
+                    <div class="imgButBox">
+                        <img id="ImaGes" :src="RenderingData.image_url" width="100%" alt="未找到图片">
+                        <div class="omtImg"></div>
+                    </div>
+                </div>
+                <!-- 按钮 List-->
+                <div class="direction">
+                    <div>
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
+                        <!--</div>-->
+                        <div>
+                            <a style="color:#fff;" class="layui-btn">导出Excel</a>
+                        </div>
+                    </div>
+                    <div style="font-size: 30px;">
+                        <div>
+                            <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
+                        </div>
+                        <div>
+                            <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--信息展示-->
+            <div class="information">
+                <!--医保信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="6">医保信息</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>定点医疗机构名称:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.hospital_name">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>定点医疗机构编码:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.hospital_id">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>公民身份证号码:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.id_card">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>单证编号:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.test_cost_no">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>社保卡/手册编号:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.social_ensurance_card">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--基本信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="6">基本信息</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>姓名:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.name">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>性别:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.sex">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>年龄:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.age">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>医疗参保人员类别:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.medical_person_type">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>共计天数:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.hospital_stay">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>费用总额:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.total_cost">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>项目数量:</div>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.project_count_row">
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--西药费-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">西药费</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==1"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text='cos.project_name' class="show">
+                                    <!-- <input type="text" placeholder="(空)" class="layui-input" v-model=""> -->
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--中成药费-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">中成药费</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==2"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text='cos.project_name'>
+                                    <!-- <input type="text" placeholder="(空)" class="layui-input" v-model=""> -->
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--床位费-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">床位费</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==3"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text='cos.project_name'>
+                                    <!-- <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_name"> -->
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--检查费-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">检查费</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==4"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text='cos.project_name'>
+                                    <!-- <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_name"> -->
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--治疗费-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">治疗费</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==5"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text="cos.project_name"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000" v-text="">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--护理费-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">护理费</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==6"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text="cos.project_name"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--手术费-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">手术费</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==7"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text="cos.project_name"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--接生费-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">接生费</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==8"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text="cos.project_name"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--保健品-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">保健品</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==10"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text="cos.project_name"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--其他-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">其他</td>
+                        </tr>
+                        <tr>
+                            <th>名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>金额</th>
+                            <th>规格</th>
+                            <th>类别</th>
+                            <th>打分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.cos_project_list" v-if="cos.parent_project_name==9"
+                            v-bind:class="{blackIdentification:Flag[index]==1}">
+                            <td v-bind:class="{greenIdentification:cos.project_name_check_code==1}">
+                                <div style="color:#000" v-text="cos.project_name"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_unit_price">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_count">
+                                </div>
+                            </td>
+                            <td v-bind:class="{greenIdentification:cos.project_check_code==1}">
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_total">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_regulation">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_class">
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color:#000">
+                                    <input type="text" placeholder="(空)" class="layui-input" v-model="cos.project_source">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--项目所属类别-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="20">项目所属类别</td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>名称</th>
+                            <th>类别名称</th>
+                            <th>一级类目</th>
+                            <th>二级类目</th>
+                            <th>三级类目</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="cos,index in RenderingData.type_list">
+                            <td v-text="index+1"></td>
+                            <td>
+                                <div style="color:#000" v-text="cos.project_name"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="cos.drug_type_name"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="cos.first_class_category"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="cos.class_two_category"></div>
+                            </td>
+                            <td>
+                                <div style="color:#000" v-text="cos.class_three_category"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--病案首页-->
+        <div class="medicalRecordHome" v-if="documentTypeList.medical_record_home">
+            <!-- 图像、控制列表 -->
+            <div class="imgAmdListBox">
+                <div class="img_move_box" onmousedown="mos(event)">
+                    <div class="imgButBox">
+                        <img id="ImaGes" :src="RenderingData.image_url" width="100%" alt="未找到图片">
+                        <div class="omtImg"></div>
+                    </div>
+                </div>
+                <!-- 按钮 List-->
+                <div class="direction">
+                    <div>
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
+                        <!--</div>-->
+                        <div>
+                            <a style="color:#fff;" class="layui-btn">导出Excel</a>
+                        </div>
+                    </div>
+                    <div style="font-size: 30px;">
+                        <div>
+                            <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
+                        </div>
+                        <div>
+                            <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--信息展示-->
+            <div class="information">
+                <!--基本信息-->
+                <table class="inTable">
+                    <thead>
+                        <tr>
+                            <td colspan="6">基本信息</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>医院名称:</div>
+                                    <div style="color:#000" v-text="RenderingData.hospital_name"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>组织机构代码:</div>
+                                    <div style="color:#000" v-text="RenderingData.group_id"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>姓名:</div>
+                                    <div style="color:#000" v-text="RenderingData.name"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>性别:</div>
+                                    <div style="color:#000" v-text="RenderingData.sex"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>出生日期:</div>
+                                    <div style="color:#000" v-text="RenderingData.date_of_birth"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>年龄:</div>
+                                    <div style="color:#000" v-text="RenderingData.age"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>国籍:</div>
+                                    <div style="color:#000" v-text="RenderingData.nationality"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>民族:</div>
+                                    <div style="color:#000" v-text="RenderingData.family_name"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>现住址:</div>
+                                    <div style="color:#000" v-text="RenderingData.present_address"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>户口地址:</div>
+                                    <div style="color:#000" v-text="RenderingData.account_address"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>身份证:</div>
+                                    <div style="color:#000" v-text="RenderingData.id_card"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>职业:</div>
+                                    <div style="color:#000" v-text="RenderingData.occupation"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>入院次数:</div>
+                                    <div style="color:#000" v-text="RenderingData.number_of_hospitalization"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>入院途径:</div>
+                                    <div style="color:#000" v-text="RenderingData.admission_route"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>入院科别:</div>
+                                    <div style="color:#000" v-text="RenderingData.out_department"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>入院时间:</div>
+                                    <div style="color:#000" v-text="RenderingData.hospital_stay"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>住院天数:</div>
+                                    <div style="color:#000" v-text="RenderingData.hospital_days"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>出院诊断:</div>
+                                    <div style="color:#000" v-text="RenderingData.disease_name"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <div>门（急）诊诊断:</div>
+                                    <div style="color:#000" v-text="RenderingData.diagnosis"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div>疾病编码:</div>
+                                    <div style="color:#000" v-text="RenderingData.disease_id">
+
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--化验单-->
+        <div class="laboratory" v-if="documentTypeList.laboratory">
+            <!-- 图像、控制列表 -->
+            <div class="imgAmdListBox">
+                <div class="img_move_box" onmousedown="mos(event)">
+                    <div class="imgButBox">
+                        <img id="ImaGes" :src="RenderingData['image_url']" width="100%" alt="未找到图片">
+                        <div class="omtImg"></div>
+                    </div>
+                </div>
+                <!-- 按钮 List-->
+                <div class="direction">
+                    <div>
+                        <!-- <div>-->
+                        <!--<button class="layui-btn" onclick="modify_data()">确认修改</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="updata_fyxx()">添加费用信息</button>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--<button class="layui-btn" onclick="open_url.Cost_url()">查看本组报告</button>-->
+                        <!--</div> -->
+                        <div>
+                            <a style="color:#fff;" class="layui-btn">导出Excel</a>
+                        </div>
+                    </div>
+                    <div style="font-size: 30px;">
+                        <div>
+                            <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
+                        </div>
+                        <div>
+                            <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--信息展示-->
+            <div class="information">
+                <form>
+                    <!--基本信息-->
+                    <table class="inTable">
+                        <thead>
+                            <tr>
+                                <td colspan="6">基本信息</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div>医院:</div>
+                                        <div style="color:#000">
+                                            <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.hospital.value">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>姓名:</div>
+                                        <div style="color:#000">
+                                            <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.name.value">
+
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>年龄:</div>
+                                        <div style="color:#000">
+                                            <!-- 待办：年龄性别，报告日期等未修改 -->
+                                            <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.age.value">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div>性别:</div>
+                                        <div style="color:#000">
+                                            <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.sex.value">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>报告日期:</div>
+                                        <div style="color:#000">
+                                            <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.report_time.value">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>检验日期:</div>
+                                        <div style="color:#000">
+                                            <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.check_time.value">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div>科室:</div>
+                                        <div style="color:#000">
+                                            <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.department.value">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>诊断:</div>
+                                        <div style="color:#000">
+                                            <input type="text" placeholder="(空)" class="layui-input" v-model="RenderingData.diagnose.value">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--处方信息-->
+                    <table class="inTable">
+                        <thead>
+                            <tr>
+                                <td colspan="6">处方信息</td>
+                            </tr>
+                            <tr>
+                                <th>指标名称</th>
+                                <th>指标正常值范围</th>
+                                <th>单位</th>
+                                <th>指标值</th>
+                                <th>标识</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="lab in RenderingData.index_arr">
+                                <td>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input show" v-model="lab.index_name">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="lab.index_normal_value">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input" v-model="lab.index_unit">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="color:#000">
+                                        <input type="text" placeholder="(空)" class="layui-input Value" v-model="lab.index_value">
+                                    </div>
+                                </td>
+                                <td style="text-align: center">
+                                    <i v-if="lab.index_flag==1" class="fa fa-arrow-up"></i>
+                                    <i v-if="lab.index_flag==2" class="fa fa-arrow-down"></i>
+                                    <i v-if="lab.index_flag==0" style="color:#5daf34;" class="fa fa-circle"></i>
+                                    <i v-if="lab.index_flag==3" style="color: #999" class="fa fa-circle"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <input type="submit" value='提交修改' id="submit">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <!--其他-->
+        <div class="other" v-if="documentTypeList.other" v-for="i in inData.other">
+            <!-- 图像、控制列表 -->
+            <div class="imgAmdListBox">
+                <div class="img_move_box" onmousedown="mos(event)">
+                    <div class="imgButBox">
+                        <img id="ImaGes" :src="i.image_url" width="100%" alt="未找到图片">
+                        <div class="omtImg"></div>
+                    </div>
+                </div>
+                <!-- 按钮 List-->
+                <div class="direction">
+                    <div style="font-size: 30px;">
+                        <div>
+                            <a class="fa fa-chevron-circle-left" v-on:click="direction(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-chevron-circle-right" v-on:click="direction(false)"></a>
+                        </div>
+                        <div>
+                            <a class="fa fa-search-plus" v-on:click="enlarge(true)"></a>
+                        </div>
+                        <div>
+                            <a class="	fa fa-search-minus" v-on:click="enlarge(false)"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../static/custom_visualization/js/ProhibitCaching.js"></script>
+    <script>
+        var pCg = new pCg();
+        pCg.Load(['min.js', 'vue-resource.js', 'invoice.js']);
+    </script>
+    <script src="../../../static/custom_visualization/js/jquery-2.1.1.min.js"></script>
 </body>
+
 </html>
