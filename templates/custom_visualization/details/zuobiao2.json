@@ -1,6 +1,6 @@
 {
-    "ret_ts": 1546414014,
-    "case_id": "obn85",
+    "ret_ts": 1546828243,
+    "case_id": "hydtest14",
     "data": {
         "medical_record_home": [],
         "other": [],
@@ -10,15 +10,57 @@
         "laboratory": [{
             "diagnose": {
                 "position": {
-                    "width": "2890",
-                    "top": "71",
-                    "height": "366",
+                    "width": "3026",
+                    "top": "252",
+                    "height": "48",
                     "left": "0"
                 },
                 "recognise": null,
-                "value": "\u80be\u75c5\u7efc\u5408\u5f81 \u7cd6\u5c3f\u75c5 "
+                "value": "\u7cd6\u5c3f\u75c5 \u53cd\u590d\u53d1\u4f5c\u4f4e\u8840\u7cd6 \u8840\u7cd6\u4e0d\u7a33\u5b9a \u7cd6\u5c3f "
             },
             "report_time": {
+                "position": {
+                    "width": "3026",
+                    "top": "1560",
+                    "height": "41",
+                    "left": "0"
+                },
+                "recognise": null,
+                "value": "2015-09\u201408"
+            },
+            "image_name": "shumei_1546571883_2425_docx.jpg",
+            "sex": {
+                "position": {
+                    "width": "3026",
+                    "top": "139",
+                    "height": "48",
+                    "left": "0"
+                },
+                "recognise": null,
+                "value": "\u7537"
+            },
+            "name": {
+                "position": {
+                    "width": "3026",
+                    "top": "139",
+                    "height": "48",
+                    "left": "0"
+                },
+                "recognise": null,
+                "value": "\u8881\u667a"
+            },
+            "uuid": "hydtest14",
+            "check_time": {
+                "position": {
+                    "width": "3026",
+                    "top": "1560",
+                    "height": "41",
+                    "left": "0"
+                },
+                "recognise": null,
+                "value": "2015-09-08"
+            },
+            "hospital": {
                 "position": {
                     "width": "0",
                     "top": "0",
@@ -28,189 +70,147 @@
                 "recognise": "",
                 "value": ""
             },
-            "image_name": "shumei_1546413650_2622_docx.jpg",
-            "sex": {
-                "position": {
-                    "width": "2890",
-                    "top": "71",
-                    "height": "366",
-                    "left": "0"
-                },
-                "recognise": null,
-                "value": "\u5973"
-            },
-            "name": {
-                "position": {
-                    "width": "2890",
-                    "top": "1412",
-                    "height": "30",
-                    "left": "0"
-                },
-                "recognise": null,
-                "value": "\u7f8e\u73b2"
-            },
-            "uuid": "obn85",
-            "check_time": {
-                "position": {
-                    "width": "2890",
-                    "top": "1412",
-                    "height": "30",
-                    "left": "0"
-                },
-                "recognise": null,
-                "value": "2018-04-14"
-            },
-            "hospital": {
-                "position": {
-                    "width": "2890",
-                    "top": "71",
-                    "height": "366",
-                    "left": "0"
-                },
-                "recognise": null,
-                "value": "\u5317\u4eac\u5927\u5b66\u7b2c\u4e00\u533b\u9662"
-            },
-            "image_url": "http://182.92.106.16:899/images/exhibited_picture/shumei_1546413650_2622_docx.jpg",
+            "image_url": "http://182.92.106.16:899/images/exhibited_picture/shumei_1546571883_2425_docx.jpg",
             "index_arr": [{
-                "index_value": "8",
-                "index_name": "D\u4e8c\u805a\u4f53",
-                "height": "28",
+                "index_value": "1.82",
+                "index_name": "\u4f4e\u5bc6\u5ea6\u8102\u86cb\u767d\u80c6\u56fa\u9187",
+                "height": "39",
                 "recognise": null,
                 "index_flag": "",
-                "index_normal_value": "",
-                "width": "2890",
-                "index_unit": "mg/L",
-                "index_id": 22980,
-                "top": "758",
-                "left": "0"
-            }, {
-                "index_value": "9",
-                "index_name": "\u7ea4\u7ef4\u86cb\u767d\u539f\u964d\u89e3\u4ea7\u7269",
-                "height": "75",
-                "recognise": null,
-                "index_flag": "",
-                "index_normal_value": "",
-                "width": "2890",
-                "index_unit": "mg/L",
-                "index_id": 22973,
-                "top": "790",
-                "left": "0"
-            }, {
-                "index_value": "10",
-                "index_name": "\u51dd\u8840\u9176\u65f6\u95f4",
-                "height": "75",
-                "recognise": null,
-                "index_flag": "",
-                "index_normal_value": "",
-                "width": "2890",
-                "index_unit": "mg/L",
-                "index_id": 22974,
-                "top": "790",
+                "index_normal_value": "2.7-3.64",
+                "width": "3026",
+                "index_unit": "mmol/L",
+                "index_id": 23228,
+                "top": "713",
                 "left": "0"
             }, {
                 "index_value": "1",
-                "index_name": "\u51dd\u8840\u9176\u539f\u65f6\u95f4",
-                "height": "44",
+                "index_name": "\u4f4e\u5bc6\u5ea6\u8102\u86cb\u767d\u80c6\u56fa\u9187",
+                "height": "348",
                 "recognise": null,
                 "index_flag": "",
                 "index_normal_value": "",
-                "width": "2890",
-                "index_unit": "",
-                "index_id": 22979,
-                "top": "486",
+                "width": "3026",
+                "index_unit": "mmol/L",
+                "index_id": 23232,
+                "top": "770",
                 "left": "0"
             }, {
-                "index_value": "0.96",
-                "index_name": "\u51dd\u8840\u9176\u539f\u65f6\u95f4\u6bd4\u503c",
-                "height": "30",
+                "index_value": "4.34",
+                "index_name": "\u4f4e\u5bc6\u5ea6\u8102\u86cb\u767d\u80c6\u56fa\u9187",
+                "height": "348",
                 "recognise": null,
                 "index_flag": "",
                 "index_normal_value": "",
-                "width": "2890",
-                "index_unit": "",
-                "index_id": 22981,
-                "top": "532",
+                "width": "3026",
+                "index_unit": "mmol/L",
+                "index_id": 23233,
+                "top": "770",
                 "left": "0"
             }, {
-                "index_value": "3",
-                "index_name": "\u51dd\u8840\u9176\u539f\u6d3b\u52a8\u5ea6",
-                "height": "29",
+                "index_value": "-",
+                "index_name": "\u8461\u8404\u7cd6",
+                "height": "348",
                 "recognise": null,
                 "index_flag": "",
                 "index_normal_value": "",
-                "width": "2890",
-                "index_unit": "",
-                "index_id": 22975,
-                "top": "566",
+                "width": "3026",
+                "index_unit": "%",
+                "index_id": 23234,
+                "top": "770",
                 "left": "0"
             }, {
-                "index_value": "4",
-                "index_name": "\u56fd\u9645\u6807\u51c6\u5316\u6bd4\u503c",
-                "height": "44",
+                "index_value": "10.29",
+                "index_name": "\u808c\u9150",
+                "height": "348",
                 "recognise": null,
                 "index_flag": "",
                 "index_normal_value": "",
-                "width": "2890",
+                "width": "3026",
                 "index_unit": "",
-                "index_id": 22977,
-                "top": "598",
+                "index_id": 23235,
+                "top": "770",
                 "left": "0"
             }, {
-                "index_value": "28.6",
-                "index_name": "\u6d3b\u5316\u90e8\u5206\u51dd\u8840\u6d3b\u9176\u65f6\u95f4",
-                "height": "29",
+                "index_value": "9.49",
+                "index_name": "\u8840\u6e05\u5c3f\u7d20",
+                "height": "39",
                 "recognise": null,
                 "index_flag": "",
-                "index_normal_value": "",
-                "width": "2890",
-                "index_unit": "",
-                "index_id": 22972,
-                "top": "645",
+                "index_normal_value": "2.9-8.2",
+                "width": "3026",
+                "index_unit": "mmol/L",
+                "index_id": 23230,
+                "top": "395",
                 "left": "0"
             }, {
-                "index_value": "6",
-                "index_name": "\u6d3b\u5316\u90e8\u5206\u51dd\u8840\u6d3b\u9176\u65f6\u95f4",
-                "height": "29",
+                "index_value": "95.18",
+                "index_name": "\u808c\u9150",
+                "height": "39",
                 "recognise": null,
                 "index_flag": "",
-                "index_normal_value": "",
-                "width": "2890",
-                "index_unit": "",
-                "index_id": 22976,
-                "top": "678",
+                "index_normal_value": "44-115",
+                "width": "3026",
+                "index_unit": "umol/L",
+                "index_id": 23237,
+                "top": "450",
                 "left": "0"
             }, {
-                "index_value": "7",
-                "index_name": "\u7ea4\u7ef4\u86cb\u767d\u539f",
-                "height": "44",
+                "index_value": "11.81",
+                "index_name": "\u7518\u6cb9\u4e09\u916f",
+                "height": "39",
                 "recognise": null,
                 "index_flag": "",
-                "index_normal_value": "",
-                "width": "2890",
-                "index_unit": "g/L",
-                "index_id": 22978,
-                "top": "710",
+                "index_normal_value": "0.38-1.70",
+                "width": "3026",
+                "index_unit": "mmol/L",
+                "index_id": 23229,
+                "top": "503",
+                "left": "0"
+            }, {
+                "index_value": "6.93",
+                "index_name": "\u8840\u6e05\u603b\u80c6\u56fa\u9187",
+                "height": "39",
+                "recognise": null,
+                "index_flag": "",
+                "index_normal_value": "2.40-5.70",
+                "width": "3026",
+                "index_unit": "mmol/L",
+                "index_id": 23236,
+                "top": "558",
+                "left": "0"
+            }, {
+                "index_value": "0.771",
+                "index_name": "\u9ad8\u5bc6\u5ea6\u8102\u86cb\u767d\u80c6\u56fa\u9187",
+                "height": "38",
+                "recognise": null,
+                "index_flag": "",
+                "index_normal_value": "1.04-1.42",
+                "width": "3026",
+                "index_unit": "mmol/L",
+                "index_id": 23231,
+                "top": "612",
                 "left": "0"
             }],
             "department": {
                 "position": {
-                    "width": "2890",
-                    "top": "71",
-                    "height": "366",
+                    "width": "3026",
+                    "top": "195",
+                    "height": "49",
                     "left": "0"
                 },
                 "recognise": null,
-                "value": "\u65b9\u4fbf\u95e8\u8bca"
+                "value": "\u5185\u5206\u6ccc\u95e8\u8bca"
             },
             "age": {
                 "position": {
-                    "width": "2890",
-                    "top": "71",
-                    "height": "366",
+                    "width": "3026",
+                    "top": "139",
+                    "height": "48",
                     "left": "0"
                 },
                 "recognise": null,
-                "value": "74"
+                "value": "51"
             }
         }],
         "medical_data": [{
